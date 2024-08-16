@@ -1,4 +1,6 @@
-package ru.gubern;
+package ru.gubern.entities;
+
+import ru.gubern.entities.Subject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
     private int age;
-    private ArrayList<Subject> subjects;
+    private ArrayList<Integer> subjectsIds;
     private LocalDateTime retirementDate;
     private LocalDateTime dismissalDate = null;
 
@@ -16,7 +18,8 @@ public class Teacher {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.subjects = new ArrayList<>();
+        this.subjectsIds = new ArrayList<>();
+        this.retirementDate = LocalDateTime.now();
     }
 
     public Teacher(int id, String firstName, String lastName, int age) {
@@ -24,7 +27,7 @@ public class Teacher {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.subjects = new ArrayList<>();
+        this.subjectsIds = new ArrayList<>();
         this.retirementDate = LocalDateTime.now();
     }
 
@@ -68,22 +71,24 @@ public class Teacher {
         this.age = age;
     }
 
-    public ArrayList<Subject> getSubjects() {
-        return subjects;
+    public ArrayList<Integer> getSubjects() {
+        return subjectsIds;
     }
 
-    public void setSubjects(ArrayList<Subject> subjects) {
-        this.subjects = subjects;
+    public void setSubjects(ArrayList<Integer> subjects) {
+        this.subjectsIds = subjects;
     }
-
+    public void addSubject(Integer subjectId) {
+        subjectsIds.add(subjectId);
+    }
     @Override
     public String toString() {
-        return "ru.gubern.Teacher{" +
+        return "Teacher{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
-                ", subjects=" + subjects +
+                ", subjects=" + subjectsIds +
                 ", retirementDate=" + retirementDate +
                 ", dismissalDate=" + dismissalDate +
                 '}';

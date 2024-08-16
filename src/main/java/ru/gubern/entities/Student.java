@@ -1,6 +1,4 @@
-package ru.gubern;
-
-import ru.gubern.Subject;
+package ru.gubern.entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +9,7 @@ public class Student {
     private String lastName;
     private int age;
     private int group;
-    private ArrayList<Subject> subjects;
+    private ArrayList<Integer> subjectsId;
     private LocalDateTime enrollmentDate;
     private LocalDateTime graduationDate = null;
 
@@ -20,7 +18,8 @@ public class Student {
         this.lastName = lastName;
         this.age = age;
         this.group = group;
-        this.subjects = new ArrayList<>();
+        this.subjectsId = new ArrayList<>();
+        this.enrollmentDate = LocalDateTime.now();
     }
 
     public Student(int id, String firstName, String lastName, int age, int group) {
@@ -29,7 +28,7 @@ public class Student {
         this.lastName = lastName;
         this.age = age;
         this.group = group;
-        this.subjects = new ArrayList<>();
+        this.subjectsId = new ArrayList<>();
         this.enrollmentDate = LocalDateTime.now();
     }
 
@@ -89,23 +88,26 @@ public class Student {
         this.group = group;
     }
 
-    public ArrayList<Subject> getSubjects() {
-        return subjects;
+    public ArrayList<Integer> getSubjects() {
+        return subjectsId;
     }
 
-    public void setSubjects(ArrayList<Subject> subjects) {
-        this.subjects = subjects;
+    public void setSubjects(ArrayList<Integer> subjects) {
+        this.subjectsId = subjects;
     }
 
+    public void addSubject(int subjectId) {
+        subjectsId.add(subjectId);
+    }
     @Override
     public String toString() {
-        return "ru.gubern.Student{" +
+        return "Student{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", group=" + group +
-                ", subjects=" + subjects +
+                ", subjects=" + subjectsId +
                 ", enrollmentDate=" + enrollmentDate +
                 ", graduationDate=" + graduationDate +
                 '}';
