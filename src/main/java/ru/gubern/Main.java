@@ -59,5 +59,11 @@ public class Main {
         System.out.println(subjectIdsByTeacher);
         var subjectIdsByStudent = localSystem.getSubjectIdsByStudent(student.getId());
         System.out.println(subjectIdsByStudent);
+
+        //history
+        System.out.println("_____________________________________");
+        System.out.println(localSystem.getStudentHistory());
+        System.out.println(localSystem.getTeacherHistory());
+        System.out.println(localSystem.getSubjectHistory());
     }
 }

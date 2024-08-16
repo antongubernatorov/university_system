@@ -5,6 +5,7 @@ import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class LocalSystem implements LocalSystemInterface {
     public static int idTeacherGenerator = -1;
     public static int idStudentGenerator = -1;
     public static int idSubjectGenerator = -1;
+    public final LocalHistory history = Manager.getDefaultHistory();
 
     @Override
     public void createTeacher(Teacher teacher) {
@@ -82,6 +84,7 @@ public class LocalSystem implements LocalSystemInterface {
     @Override
     public Teacher getTeacherById(int id) {
         if(teachers.containsKey(id)){
+            history.addTeacher(teachers.get(id));
             return teachers.get(id);
         } else {
             System.out.println("Данного преподавателя нет в системе");
@@ -92,6 +95,7 @@ public class LocalSystem implements LocalSystemInterface {
     @Override
     public Student getStudentById(int id) {
         if(students.containsKey(id)){
+            history.addStudent(students.get(id));
             return students.get(id);
         } else {
             System.out.println("Данного студента нет в системе");
@@ -102,6 +106,7 @@ public class LocalSystem implements LocalSystemInterface {
     @Override
     public Subject getSubjectById(int id) {
         if(subjects.containsKey(id)){
+            history.addSubject(subjects.get(id));
             return subjects.get(id);
         } else {
             System.out.println("Данного предмета нет в системе");
@@ -111,16 +116,25 @@ public class LocalSystem implements LocalSystemInterface {
 
     @Override
     public List<Teacher> getAllTeachers() {
+        for (Teacher teacher : teachers.values()){
+            history.addTeacher(teacher);
+        }
         return new ArrayList<>(teachers.values());
     }
 
     @Override
     public List<Subject> getAllSubjects() {
+        for (Subject subject: subjects.values()){
+            history.addSubject(subject);
+        }
         return new ArrayList<>(subjects.values());
     }
 
     @Override
     public List<Student> getAllStudents() {
+        for (Student student: students.values()){
+            history.addStudent(student);
+        }
         return new ArrayList<>(students.values());
     }
 
@@ -142,6 +156,21 @@ public class LocalSystem implements LocalSystemInterface {
     @Override
     public List<Integer> getSubjectIdsByTeacher(int teacherId) {
         return teachers.get(teacherId).getSubjects();
+    }
+
+    @Override
+    public Deque<Student> getStudentHistory() {
+        return history.getStudentHistory();
+    }
+
+    @Override
+    public Deque<Teacher> getTeacherHistory() {
+        return history.getTeacherHistory();
+    }
+
+    @Override
+    public Deque<Subject> getSubjectHistory() {
+        return history.getSubjectHistory();
     }
 
     @Override

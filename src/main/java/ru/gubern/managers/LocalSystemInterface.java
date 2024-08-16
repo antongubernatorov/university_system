@@ -5,6 +5,7 @@ import ru.gubern.entities.Student;
 import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
 
+import java.util.Deque;
 import java.util.List;
 
 public interface LocalSystemInterface {
@@ -28,6 +29,9 @@ public interface LocalSystemInterface {
     List<Integer> getTeacherIdsBySubject(int subjectId);
     List<Integer> getSubjectIdsByStudent(int studentId);
     List<Integer> getSubjectIdsByTeacher(int teacherId);
+    Deque<Student> getStudentHistory();
+    Deque<Teacher> getTeacherHistory();
+    Deque<Subject> getSubjectHistory();
     void deleteAllTeachers();
     void deleteAllSubjects();
     void deleteAllStudents();
