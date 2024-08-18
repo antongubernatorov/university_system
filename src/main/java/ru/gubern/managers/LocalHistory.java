@@ -8,9 +8,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 public class LocalHistory implements LocalHistoryInterface{
-    private Deque<Student> studentsHistory = new ArrayDeque<>(10);
-    private Deque<Teacher> teacherHistory = new ArrayDeque<>(10);
-    private Deque<Subject> subjectHistory = new ArrayDeque<>(10);
+    private final Deque<Student> studentsHistory = new ArrayDeque<>(10);
+    private final Deque<Teacher> teacherHistory = new ArrayDeque<>(10);
+    private final Deque<Subject> subjectHistory = new ArrayDeque<>(10);
     @Override
     public void addStudent(Student student) {
         studentsHistory.addFirst(student);

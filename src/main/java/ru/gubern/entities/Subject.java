@@ -3,6 +3,8 @@ package ru.gubern.entities;
 import java.time.Period;
 import java.util.ArrayList;
 
+import static ru.gubern.utility.IdsToString.subjectsIdsToString;
+
 public class Subject {
     private int id;
     private String name;
@@ -84,13 +86,11 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", credits=" + credits +
-                ", teachersIds=" + teachersIds +
-                ", studentsIds=" + studentsIds +
-                ", courseDuration=" + courseDuration +
-                '}';
+        return id +
+                "," + name +
+                "," + credits +
+                "," + subjectsIdsToString(teachersIds) +
+                "," + subjectsIdsToString(studentsIds) +
+                "," + courseDuration;
     }
 }

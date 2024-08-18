@@ -5,6 +5,8 @@ import ru.gubern.entities.Subject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static ru.gubern.utility.IdsToString.subjectsIdsToString;
+
 public class Teacher {
     private int id;
     private String firstName;
@@ -83,15 +85,13 @@ public class Teacher {
     }
     @Override
     public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", subjects=" + subjectsIds +
-                ", retirementDate=" + retirementDate +
-                ", dismissalDate=" + dismissalDate +
-                '}';
+        return id +
+                "," + firstName +
+                "," + lastName +
+                "," + age +
+                "," + subjectsIdsToString(subjectsIds) +
+                "," + retirementDate +
+                "," + dismissalDate;
     }
 
     public int getId() {

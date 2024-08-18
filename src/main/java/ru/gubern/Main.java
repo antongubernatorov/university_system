@@ -3,14 +3,10 @@ package ru.gubern;
 import ru.gubern.entities.Student;
 import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
-import ru.gubern.managers.LocalSystem;
 import ru.gubern.managers.Manager;
 
 import java.time.Period;
-import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Manager manager = new Manager();
