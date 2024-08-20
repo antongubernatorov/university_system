@@ -3,10 +3,15 @@ package ru.gubern.managers;
 import ru.gubern.entities.Student;
 import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
-import java.io.*;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Period;
 import java.util.Deque;
+import java.util.List;
 
 public class FileBackendSystem extends LocalSystem{
     private File saveFileStudents = new File("src/main/java/ru/gubern/files", "SaveStudents.csv");
@@ -60,6 +65,276 @@ public class FileBackendSystem extends LocalSystem{
         saveHistoryStudents();
         saveHistoryTeachers();
         saveHistorySubjects();
+    }
+
+    @Override
+    public void createTeacher(Teacher teacher) {
+        super.createTeacher(teacher);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void createStudent(Student student) {
+        super.createStudent(student);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void createSubject(Subject subject) {
+        super.createSubject(subject);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateTeacher(Teacher teacher) {
+        super.updateTeacher(teacher);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateSubject(Subject subject) {
+        super.updateSubject(subject);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+        super.updateStudent(student);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteTeacherById(int id) {
+        super.deleteTeacherById(id);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteStudentById(int id) {
+        super.deleteStudentById(id);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteSubjectById(int id) {
+        super.deleteSubjectById(id);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Teacher getTeacherById(int id) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getTeacherById(id);
+    }
+
+    @Override
+    public Student getStudentById(int id) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getStudentById(id);
+    }
+
+    @Override
+    public Subject getSubjectById(int id) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getSubjectById(id);
+    }
+
+    @Override
+    public List<Teacher> getAllTeachers() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getAllTeachers();
+    }
+
+    @Override
+    public List<Subject> getAllSubjects() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getAllSubjects();
+    }
+
+    @Override
+    public List<Student> getAllStudents() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getAllStudents();
+    }
+
+    @Override
+    public List<Integer> getStudentIdsBySubject(int subjectId) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getStudentIdsBySubject(subjectId);
+    }
+
+    @Override
+    public List<Integer> getTeacherIdsBySubject(int subjectId) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getTeacherIdsBySubject(subjectId);
+    }
+
+    @Override
+    public List<Integer> getSubjectIdsByStudent(int studentId) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getSubjectIdsByStudent(studentId);
+    }
+
+    @Override
+    public List<Integer> getSubjectIdsByTeacher(int teacherId) {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getSubjectIdsByTeacher(teacherId);
+    }
+
+    @Override
+    public Deque<Student> getStudentHistory() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getStudentHistory();
+    }
+
+    @Override
+    public Deque<Teacher> getTeacherHistory() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getTeacherHistory();
+    }
+
+    @Override
+    public Deque<Subject> getSubjectHistory() {
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return super.getSubjectHistory();
+    }
+
+    @Override
+    public void deleteAllTeachers() {
+        super.deleteAllTeachers();
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteAllSubjects() {
+        super.deleteAllSubjects();
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteAllStudents() {
+        super.deleteAllStudents();
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addSubjectToStudentById(int studentId, int subjectId) {
+        super.addSubjectToStudentById(studentId, subjectId);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addSubjectToTeacherById(int teacherId, int subjectId) {
+        super.addSubjectToTeacherById(teacherId, subjectId);
+        try {
+            save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void saveStudents(){
@@ -130,6 +405,7 @@ public class FileBackendSystem extends LocalSystem{
         }
         try (BufferedWriter wr = new BufferedWriter(new FileWriter(saveFileStudentsHistory))){
             var studentHistory = history.getStudentHistory();
+            System.out.println("История студентов - "  + studentHistory);
             wr.write("id,firstName,lastName,age,group,subjectsId,enrollmentDate,graduationDate\n");
             for(Student student : studentHistory){
                 wr.write(student.toString() + "\n");

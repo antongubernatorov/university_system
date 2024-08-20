@@ -16,7 +16,7 @@ public class LocalSystem implements LocalSystemInterface {
     public static int idTeacherGenerator = -1;
     public static int idStudentGenerator = -1;
     public static int idSubjectGenerator = -1;
-    public final LocalHistory history = Manager.getDefaultHistory();
+    public static final LocalHistory history = Manager.getDefaultHistory();
 
     @Override
     public void createTeacher(Teacher teacher) {
