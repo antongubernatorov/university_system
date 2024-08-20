@@ -34,6 +34,19 @@ public class Student {
         this.enrollmentDate = LocalDateTime.now();
     }
 
+    public Student(int id, String firstName, String lastName, int age, int group,
+                   ArrayList<Integer> subjectsId, LocalDateTime enrollmentDate,
+                   LocalDateTime graduationDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.group = group;
+        this.subjectsId = subjectsId;
+        this.enrollmentDate = enrollmentDate;
+        this.graduationDate = graduationDate;
+    }
+
     public int getId() {
         return id;
     }

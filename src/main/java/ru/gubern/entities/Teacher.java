@@ -33,6 +33,17 @@ public class Teacher {
         this.retirementDate = LocalDateTime.now();
     }
 
+    public Teacher(int id, String firstName, String lastName, int age, ArrayList<Integer> subjectsIds,
+                   LocalDateTime retirementDate, LocalDateTime dismissalDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.subjectsIds = subjectsIds;
+        this.retirementDate = retirementDate;
+        this.dismissalDate = dismissalDate;
+    }
+
     public LocalDateTime getRetirementDate() {
         return retirementDate;
     }

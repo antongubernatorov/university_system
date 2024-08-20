@@ -3,12 +3,13 @@ package ru.gubern.managers;
 import ru.gubern.entities.Student;
 import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
+import ru.gubern.exceptions.ManagerLoadException;
+import ru.gubern.utility.IdsFromString;
+import ru.gubern.utility.LocalDateParser;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Deque;
 import java.util.List;
@@ -448,65 +449,134 @@ public class FileBackendSystem extends LocalSystem{
     }
 
     //load from file
-    //history load to HistoryFile
-    //history load from HistoryFile
+    private void load() {
+        try {
+            loadStudents();
+            loadSubjects();
+            loadTeachers();
+            loadStudentHistory();
+            loadTeacherHistory();
+            loadSubjectHistory();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadStudents() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileStudents))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Student student = new Student(Integer.parseInt(entryArray[0]), entryArray[1],
+                        entryArray[2], Integer.parseInt(entryArray[3]), Integer.parseInt(entryArray[4]),
+                        IdsFromString.GetIdsFromString(entryArray[5]), LocalDateTime.parse(entryArray[6]),
+                        LocalDateParser.parseLocalDate(entryArray[7]));
+                students.put(Integer.parseInt(entryArray[0]), student);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
+
+    private void loadTeachers() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileTeachers))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Teacher teacher = new Teacher(Integer.parseInt(entryArray[0]), entryArray[1],
+                        entryArray[2], Integer.parseInt(entryArray[3]),
+                        IdsFromString.GetIdsFromString(entryArray[4]), LocalDateTime.parse(entryArray[5]),
+                        LocalDateParser.parseLocalDate(entryArray[6]));
+                teachers.put(Integer.parseInt(entryArray[0]), teacher);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
+
+    private void loadSubjects() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileSubjects))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Subject subject = new Subject(Integer.parseInt(entryArray[0]), entryArray[1], Integer.parseInt(entryArray[2]),
+                        IdsFromString.GetIdsFromString(entryArray[3]), IdsFromString.GetIdsFromString(entryArray[4]),
+                        Period.parse(entryArray[5]));
+                subjects.put(Integer.parseInt(entryArray[0]), subject);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
+
+    private void loadStudentHistory() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileStudentsHistory))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Student student = new Student(Integer.parseInt(entryArray[0]), entryArray[1],
+                        entryArray[2], Integer.parseInt(entryArray[3]), Integer.parseInt(entryArray[4]),
+                        IdsFromString.GetIdsFromString(entryArray[5]), LocalDateTime.parse(entryArray[6]),
+                        LocalDateParser.parseLocalDate(entryArray[7]));
+                history.addStudent(student);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
+    private void loadTeacherHistory() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileTeachersHistory))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Teacher teacher = new Teacher(Integer.parseInt(entryArray[0]), entryArray[1],
+                        entryArray[2], Integer.parseInt(entryArray[3]),
+                        IdsFromString.GetIdsFromString(entryArray[4]), LocalDateTime.parse(entryArray[5]),
+                        LocalDateParser.parseLocalDate(entryArray[6]));
+                history.addTeacher(teacher);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
+
+    private void loadSubjectHistory() throws IOException {
+        try (var reader = new BufferedReader(new FileReader(saveFileSubjectsHistory))) {
+            reader.readLine();
+            String string;
+            while ((string = reader.readLine()) != null){
+                String[] entryArray = string.split(",");
+                Subject subject = new Subject(Integer.parseInt(entryArray[0]), entryArray[1], Integer.parseInt(entryArray[2]),
+                        IdsFromString.GetIdsFromString(entryArray[3]), IdsFromString.GetIdsFromString(entryArray[4]),
+                        Period.parse(entryArray[5]));
+                history.addSubject(subject);
+            }
+        } catch (ManagerLoadException e) {
+            throw new ManagerLoadException(e.getMessage());
+        }
+    }
 
     public static void main(String[] args) throws IOException {
-        Manager manager = new Manager();
-        final var localSystem = manager.getDefault();
-        //creating teacher
-        Teacher teacher = new Teacher("Brad", "Lock", 45);
-        localSystem.createTeacher(teacher);
-        Teacher teacher2 = new Teacher("Alex", "Volk", 63);
-        localSystem.createTeacher(teacher2);
-        //creating student
-        Student student = new Student("Anton", "Gubern", 19, 1);
-        localSystem.createStudent(student);
-        Student student2 = new Student("Tim", "Vazoski", 19, 1);
-        localSystem.createStudent(student2);
-        //creating subject
-        Period period = Period.ofMonths(3);
-        Subject subject = new Subject("Linear algebra", 15, period);
-        localSystem.createSubject(subject);
-        Subject subject2 = new Subject("Math analyze", 35, period);
-        localSystem.createSubject(subject2);
-
-        //add relations
-        localSystem.addSubjectToStudentById(student.getId(), subject.getId());
-        localSystem.addSubjectToTeacherById(teacher.getId(), subject.getId());
-        localSystem.addSubjectToStudentById(student2.getId(), subject2.getId());
-        localSystem.addSubjectToStudentById(student2.getId(), subject.getId());
-        localSystem.addSubjectToTeacherById(teacher.getId(), subject.getId());
-        localSystem.addSubjectToTeacherById(teacher2.getId(), subject.getId());
-        localSystem.addSubjectToTeacherById(teacher2.getId(), subject2.getId());
-
-        //check results
-        final var allStudents = localSystem.getAllStudents();
-        System.out.println(allStudents);
-        final var allTeachers = localSystem.getAllTeachers();
-        System.out.println(allTeachers);
-        final var allSubjects = localSystem.getAllSubjects();
-        System.out.println(allSubjects);
-
-        //get by ids
-        System.out.println("_____________________________________");
-        var studentIdsBySubject = localSystem.getStudentIdsBySubject(subject.getId());
-        System.out.println(studentIdsBySubject);
-        var teacherIdsBySubject = localSystem.getTeacherIdsBySubject(subject.getId());
-        System.out.println(teacherIdsBySubject);
-        var subjectIdsByTeacher = localSystem.getSubjectIdsByTeacher(teacher.getId());
-        System.out.println(subjectIdsByTeacher);
-        var subjectIdsByStudent = localSystem.getSubjectIdsByStudent(student.getId());
-        System.out.println(subjectIdsByStudent);
-
-        //history
-        System.out.println("_____________________________________");
-        System.out.println(localSystem.getStudentHistory());
-        System.out.println(localSystem.getTeacherHistory());
-        System.out.println(localSystem.getSubjectHistory());
-
         //backend manager
         FileBackendSystem fileBackendSystem = new FileBackendSystem();
-        fileBackendSystem.save();
+
+        fileBackendSystem.load();
+        System.out.println(students);
+        System.out.println("_____________________________________");
+        System.out.println(teachers);
+        System.out.println("_____________________________________");
+        System.out.println(subjects);
+        System.out.println("_____________________________________");
+        System.out.println(history.getStudentHistory());
+        System.out.println("_____________________________________");
+        System.out.println(history.getTeacherHistory());
+        System.out.println("_____________________________________");
+        System.out.println(history.getSubjectHistory());
+        System.out.println("_____________________________________");
     }
 }

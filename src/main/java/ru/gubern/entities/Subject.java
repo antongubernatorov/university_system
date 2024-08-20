@@ -30,6 +30,16 @@ public class Subject {
         this.courseDuration = courseDuration;
     }
 
+    public Subject(int id, String name, int credits, ArrayList<Integer> teachersIds,
+                   ArrayList<Integer> studentsIds, Period courseDuration) {
+        this.id = id;
+        this.name = name;
+        this.credits = credits;
+        this.teachersIds = teachersIds;
+        this.studentsIds = studentsIds;
+        this.courseDuration = courseDuration;
+    }
+
     public String getName() {
         return name;
     }
