@@ -9,6 +9,9 @@ public class Manager {
     public static LocalHistory getDefaultHistory(){
         return new LocalHistory();
     }
+    public static SortingManager getDefaultSortingManager(){
+        return new SortingManager();
+    }
     public static FileBackendSystem getDefault(File saveFileStudents, File saveFileTeachers,
                                                File saveFileSubjects, File saveFileStudentsHistory,
                                                File saveFileTeachersHistory, File saveFileSubjectsHistory) {

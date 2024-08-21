@@ -39,4 +39,20 @@ public interface LocalSystemInterface {
     void addSubjectToStudentById(int studentId, int subjectId);
     void addSubjectToTeacherById(int studentId, int subjectId);
 
+    List<Student> sortStudentsByFirstName();
+    List<Student> sortStudentsByLastName();
+    List<Student> sortStudentsByAge();
+    List<Student> sortStudentsByGroup();
+    List<Student> sortStudentsByEnrollmentDate();
+
+    //teachers
+    List<Teacher> sortTeachersByFirstName();
+    List<Teacher> sortTeachersByLastName();
+    List<Teacher> sortTeachersByAge();
+    List<Teacher> sortTeachersByRetirementDate();
+
+    //subjects
+    List<Subject> sortSubjectsByName();
+    List<Subject> sortSubjectsByCredits();
+    List<Subject> sortSubjectsByCourseDuration();
 }

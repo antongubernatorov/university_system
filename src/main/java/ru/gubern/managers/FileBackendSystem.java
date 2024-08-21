@@ -578,5 +578,7 @@ public class FileBackendSystem extends LocalSystem{
         System.out.println("_____________________________________");
         System.out.println(history.getSubjectHistory());
         System.out.println("_____________________________________");
+        var studentsSorted = fileBackendSystem.sortStudentsByAge();
+        System.out.println(studentsSorted);
     }
 }

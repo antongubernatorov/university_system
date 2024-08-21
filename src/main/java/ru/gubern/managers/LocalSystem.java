@@ -4,10 +4,7 @@ import ru.gubern.entities.Student;
 import ru.gubern.entities.Subject;
 import ru.gubern.entities.Teacher;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class LocalSystem implements LocalSystemInterface {
     public static final HashMap<Integer, Teacher> teachers = new HashMap<>();
@@ -17,6 +14,7 @@ public class LocalSystem implements LocalSystemInterface {
     public static int idStudentGenerator = -1;
     public static int idSubjectGenerator = -1;
     public static final LocalHistory history = Manager.getDefaultHistory();
+    public static final SortingManager sortingManager = Manager.getDefaultSortingManager();
 
     @Override
     public void createTeacher(Teacher teacher) {
@@ -231,16 +229,75 @@ public class LocalSystem implements LocalSystemInterface {
             }
         }
     }
-
     private int generateNewTeacherId(){
         return ++idTeacherGenerator;
     }
-
     private int generateNewStudentId(){
         return ++idStudentGenerator;
     }
-
     private int generateNewSubjectId(){
         return ++idSubjectGenerator;
     }
+
+    //sort entities
+    @Override
+    public List<Student> sortStudentsByFirstName() {
+        return sortingManager.sortStudentsByFirstName(new ArrayList<>(students.values()));
+    }
+
+    @Override
+    public List<Student> sortStudentsByLastName() {
+        return sortingManager.sortStudentsByLastName(new ArrayList<>(students.values()));
+    }
+
+    @Override
+    public List<Student> sortStudentsByAge() {
+        return sortingManager.sortStudentsByAge(new ArrayList<>(students.values()));
+    }
+
+    @Override
+    public List<Student> sortStudentsByGroup() {
+        return sortingManager.sortStudentsByGroup(new ArrayList<>(students.values()));
+    }
+
+    @Override
+    public List<Student> sortStudentsByEnrollmentDate() {
+        return sortingManager.sortStudentsByEnrollmentDate(new ArrayList<>(students.values()));
+    }
+
+    @Override
+    public List<Teacher> sortTeachersByFirstName() {
+        return sortingManager.sortTeachersByFirstName(new ArrayList<>(teachers.values()));
+    }
+
+    @Override
+    public List<Teacher> sortTeachersByLastName() {
+        return sortingManager.sortTeachersByLastName(new ArrayList<>(teachers.values()));
+    }
+
+    @Override
+    public List<Teacher> sortTeachersByAge() {
+        return sortingManager.sortTeachersByAge(new ArrayList<>(teachers.values()));
+    }
+
+    @Override
+    public List<Teacher> sortTeachersByRetirementDate() {
+        return sortingManager.sortTeachersByRetirementDate(new ArrayList<>(teachers.values()));
+    }
+
+    @Override
+    public List<Subject> sortSubjectsByName() {
+        return sortingManager.sortSubjectsByName(new ArrayList<>(subjects.values()));
+    }
+
+    @Override
+    public List<Subject> sortSubjectsByCredits() {
+        return sortingManager.sortSubjectsByCredits(new ArrayList<>(subjects.values()));
+    }
+
+    @Override
+    public List<Subject> sortSubjectsByCourseDuration() {
+        return sortingManager.sortSubjectsByCourseDuration(new ArrayList<>(subjects.values()));
+    }
+
 }
