@@ -99,8 +99,8 @@ public class FileBackendSystem extends LocalSystem{
     }
 
     @Override
-    public void updateTeacher(Teacher teacher) {
-        super.updateTeacher(teacher);
+    public void updateTeacher(int teacherId, Teacher teacher) {
+        super.updateTeacher(teacherId, teacher);
         try {
             save();
         } catch (IOException e) {
@@ -109,8 +109,8 @@ public class FileBackendSystem extends LocalSystem{
     }
 
     @Override
-    public void updateSubject(Subject subject) {
-        super.updateSubject(subject);
+    public void updateSubject(int subjectId, Subject subject) {
+        super.updateSubject(subjectId, subject);
         try {
             save();
         } catch (IOException e) {
@@ -119,8 +119,8 @@ public class FileBackendSystem extends LocalSystem{
     }
 
     @Override
-    public void updateStudent(Student student) {
-        super.updateStudent(student);
+    public void updateStudent(int studentId, Student student) {
+        super.updateStudent(studentId, student);
         try {
             save();
         } catch (IOException e) {

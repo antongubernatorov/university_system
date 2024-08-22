@@ -13,9 +13,9 @@ public interface LocalSystemInterface {
     void createTeacher(Teacher teacher);
     void createStudent(Student student);
     void createSubject(Subject subject);
-    void updateTeacher(Teacher teacher);
-    void updateSubject(Subject subject);
-    void updateStudent(Student student);
+    void updateTeacher(int teacherId, Teacher teacher);
+    void updateSubject(int subjectId, Subject subject);
+    void updateStudent(int studentId, Student student);
     void deleteTeacherById(int id);
     void deleteStudentById(int id);
     void deleteSubjectById(int id);
@@ -55,4 +55,6 @@ public interface LocalSystemInterface {
     List<Subject> sortSubjectsByName();
     List<Subject> sortSubjectsByCredits();
     List<Subject> sortSubjectsByCourseDuration();
+
+    void deleteAllEntities();
 }

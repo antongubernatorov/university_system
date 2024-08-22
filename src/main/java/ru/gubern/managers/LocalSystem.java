@@ -38,18 +38,18 @@ public class LocalSystem implements LocalSystemInterface {
     }
 
     @Override
-    public void updateTeacher(Teacher teacher) {
-        teachers.put(teacher.getId(), teacher);
+    public void updateTeacher(int teacherId, Teacher teacher) {
+        teachers.put(teacherId, teacher);
     }
 
     @Override
-    public void updateSubject(Subject subject) {
-        subjects.put(subject.getId(), subject);
+    public void updateSubject(int subjectId, Subject subject) {
+        subjects.put(subjectId, subject);
     }
 
     @Override
-    public void updateStudent(Student student) {
-        students.put(student.getId(), student);
+    public void updateStudent(int studentId, Student student) {
+        students.put(studentId, student);
     }
 
     @Override
@@ -85,8 +85,7 @@ public class LocalSystem implements LocalSystemInterface {
             history.addTeacher(teachers.get(id));
             return teachers.get(id);
         } else {
-            System.out.println("Данного преподавателя нет в системе");
-            return null;
+            throw new NullPointerException("Данного преподавателя нет в системе");
         }
     }
 
@@ -96,8 +95,7 @@ public class LocalSystem implements LocalSystemInterface {
             history.addStudent(students.get(id));
             return students.get(id);
         } else {
-            System.out.println("Данного студента нет в системе");
-            return null;
+            throw new NullPointerException("Данного студента нет в системе");
         }
     }
 
@@ -107,13 +105,15 @@ public class LocalSystem implements LocalSystemInterface {
             history.addSubject(subjects.get(id));
             return subjects.get(id);
         } else {
-            System.out.println("Данного предмета нет в системе");
-            return null;
+            throw new NullPointerException("Данного предмета нет в системе");
         }
     }
 
     @Override
     public List<Teacher> getAllTeachers() {
+        if (teachers.isEmpty()){
+            throw new NullPointerException("В списке нет учителей");
+        }
         for (Teacher teacher : teachers.values()){
             history.addTeacher(teacher);
         }
@@ -122,6 +122,9 @@ public class LocalSystem implements LocalSystemInterface {
 
     @Override
     public List<Subject> getAllSubjects() {
+        if (subjects.isEmpty()){
+            throw new NullPointerException("В списке нет предметов");
+        }
         for (Subject subject: subjects.values()){
             history.addSubject(subject);
         }
@@ -130,6 +133,9 @@ public class LocalSystem implements LocalSystemInterface {
 
     @Override
     public List<Student> getAllStudents() {
+        if (students.isEmpty()){
+            throw new NullPointerException("В списке нет студентов");
+        }
         for (Student student: students.values()){
             history.addStudent(student);
         }
@@ -138,21 +144,33 @@ public class LocalSystem implements LocalSystemInterface {
 
     @Override
     public List<Integer> getStudentIdsBySubject(int subjectId) {
+        if(!subjects.containsKey(subjectId)){
+            throw new NullPointerException("Такого предмета нет в списке");
+        }
         return subjects.get(subjectId).getStudents();
     }
 
     @Override
     public List<Integer> getTeacherIdsBySubject(int subjectId) {
+        if(!subjects.containsKey(subjectId)){
+            throw new NullPointerException("Такого предмета нет в списке");
+        }
         return subjects.get(subjectId).getTeachers();
     }
 
     @Override
     public List<Integer> getSubjectIdsByStudent(int studentId) {
+        if(!students.containsKey(studentId)){
+            throw new NullPointerException("Такого студента нет в списке");
+        }
         return students.get(studentId).getSubjects();
     }
 
     @Override
     public List<Integer> getSubjectIdsByTeacher(int teacherId) {
+        if(!teachers.containsKey(teacherId)){
+            throw new NullPointerException("Такого студента нет в списке");
+        }
         return teachers.get(teacherId).getSubjects();
     }
 
@@ -173,27 +191,21 @@ public class LocalSystem implements LocalSystemInterface {
 
     @Override
     public void deleteAllTeachers() {
-        if(teachers.isEmpty()){
-            System.out.println("Список преподавателей пуст");
-        } else {
+        if(!teachers.isEmpty()){
             teachers.clear();
         }
     }
 
     @Override
     public void deleteAllSubjects() {
-        if(subjects.isEmpty()){
-            System.out.println("Список предметов пуст");
-        } else {
+        if(!subjects.isEmpty()){
             subjects.clear();
         }
     }
 
     @Override
     public void deleteAllStudents() {
-        if(students.isEmpty()){
-            System.out.println("Список студентов пуст");
-        } else {
+        if(!students.isEmpty()){
             students.clear();
         }
     }
@@ -298,6 +310,13 @@ public class LocalSystem implements LocalSystemInterface {
     @Override
     public List<Subject> sortSubjectsByCourseDuration() {
         return sortingManager.sortSubjectsByCourseDuration(new ArrayList<>(subjects.values()));
+    }
+
+    @Override
+    public void deleteAllEntities() {
+        deleteAllStudents();
+        deleteAllTeachers();
+        deleteAllSubjects();
     }
 
 }
