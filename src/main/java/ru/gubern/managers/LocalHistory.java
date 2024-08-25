@@ -20,6 +20,10 @@ public class LocalHistory implements LocalHistoryInterface{
     public Deque<Student> getStudentHistory() {
         return studentsHistory;
     }
+    @Override
+    public void clearStudentHistory() {
+        studentsHistory.clear();
+    }
 
     @Override
     public void removeStudent() {
@@ -37,6 +41,11 @@ public class LocalHistory implements LocalHistoryInterface{
     }
 
     @Override
+    public void clearSubjectHistory() {
+        subjectHistory.clear();
+    }
+
+    @Override
     public void removeSubject() {
         subjectHistory.pop();
     }
@@ -49,6 +58,10 @@ public class LocalHistory implements LocalHistoryInterface{
     @Override
     public Deque<Teacher> getTeacherHistory() {
         return teacherHistory;
+    }
+    @Override
+    public void clearTeacherHistory() {
+        teacherHistory.clear();
     }
 
     @Override

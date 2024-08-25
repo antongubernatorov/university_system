@@ -338,7 +338,7 @@ public class FileBackendSystem extends LocalSystem{
         }
     }
 
-    private void saveStudents(){
+    public void saveStudents(){
         try {
             if (!Files.exists(saveFileStudents.toPath())){
                 Files.createFile(saveFileStudents.toPath());
@@ -449,7 +449,7 @@ public class FileBackendSystem extends LocalSystem{
     }
 
     //load from file
-    private void load() {
+    public void load() {
         try {
             loadStudents();
             loadSubjects();

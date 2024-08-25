@@ -13,16 +13,19 @@ public interface LocalHistoryInterface{
     //StudentHistory
     void addStudent (Student student);
     Deque<Student> getStudentHistory();
+    void clearStudentHistory();
     void removeStudent();
 
     //SubjectHistory
     void addSubject (Subject subject);
     Deque<Subject> getSubjectHistory();
+    void clearSubjectHistory();
     void removeSubject();
 
     //TeacherHistory
     void addTeacher (Teacher teacher);
     Deque<Teacher> getTeacherHistory();
+    void clearTeacherHistory();
     void removeTeacher();
 
 

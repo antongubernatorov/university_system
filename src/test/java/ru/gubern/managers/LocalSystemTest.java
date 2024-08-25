@@ -8,9 +8,8 @@ import ru.gubern.entities.Teacher;
 import java.time.Period;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.gubern.managers.LocalSystem.teachers;
+import static ru.gubern.managers.LocalSystem.*;
 import static ru.gubern.managers.Manager.getDefault;
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -93,12 +92,11 @@ public abstract class LocalSystemTest<T extends LocalSystem>{
             localSystem.deleteAllTeachers();
             localSystem.createTeacher(teacher);
             localSystem.createTeacher(teacher2);
-            localSystem.getAllTeachers();
             assertThat(teachers.size()).isEqualTo(2);
         }
         @Test
         void deleteAllTeachers() {
-            localSystem.getAllTeachers();
+            localSystem.deleteAllTeachers();
             localSystem.createTeacher(teacher);
             localSystem.createTeacher(teacher2);
             localSystem.deleteAllTeachers();
@@ -116,27 +114,48 @@ public abstract class LocalSystemTest<T extends LocalSystem>{
             var studentById = localSystem.getStudentById(student.getId());
             assertThat(student).isEqualTo(studentById);
         }
+        //TODO 22/08/2024 20:27
         @Test
         void updateStudent() {
-            
+            localSystem.deleteAllStudents();
+            localSystem.createStudent(student);
+            Student studentNew = new Student("Anton", "Gubern", 21,1);
+            int oldStudentId = student.getId();
+            localSystem.updateStudent(oldStudentId, studentNew);
+            assertThat(students.get(oldStudentId)).isEqualTo(studentNew);
         }
 
         @Test
         void deleteStudentById() {
+            localSystem.deleteAllStudents();
+            localSystem.createStudent(student);
+            localSystem.deleteStudentById(student.getId());
+            assertThat(students.size()).isEqualTo(0);
         }
 
         @Test
         void getStudentById() {
+            localSystem.deleteAllStudents();
+            localSystem.createStudent(student);
+            var studentById = localSystem.getStudentById(student.getId());
+            assertThat(studentById).isEqualTo(student);
         }
+
         @Test
         void getAllStudents() {
-        }
-        @Test
-        void getStudentIdsBySubject() {
+            localSystem.deleteAllStudents();
+            localSystem.createStudent(student);
+            localSystem.createStudent(student2);
+            assertThat(students.size()).isEqualTo(2);
         }
 
         @Test
         void deleteAllStudents() {
+            localSystem.deleteAllStudents();
+            localSystem.createStudent(student);
+            localSystem.createStudent(student2);
+            localSystem.deleteAllStudents();
+            assertThat(students.size()).isEqualTo(0);
         }
     }
 
@@ -145,54 +164,87 @@ public abstract class LocalSystemTest<T extends LocalSystem>{
     class subjectTest{
         @Test
         void createSubject() {
+            localSystem.deleteAllSubjects();
+            localSystem.createSubject(subject);
+            var subjectById = localSystem.getSubjectById(subject.getId());
+            assertThat(subject).isEqualTo(subjectById);
         }
 
         @Test
         void updateSubject() {
+            localSystem.deleteAllSubjects();
+            localSystem.createSubject(subject);
+            Subject subjectNew = new Subject("Linear", 30, Period.of(0,12,0));
+            int oldSubjectId = subject.getId();
+            localSystem.updateSubject(oldSubjectId, subjectNew);
+            assertThat(subjects.get(oldSubjectId)).isEqualTo(subjectNew);
         }
         @Test
         void deleteSubjectById() {
+            localSystem.deleteAllSubjects();
+            localSystem.createSubject(subject);
+            localSystem.deleteSubjectById(subject.getId());
+            assertThat(subjects.size()).isEqualTo(0);
         }
 
         @Test
         void getSubjectById() {
+            localSystem.deleteAllSubjects();
+            localSystem.createSubject(subject);
+            var subjectById = localSystem.getSubjectById(subject.getId());
+            assertThat(subjectById).isEqualTo(subject);
         }
         @Test
         void getAllSubjects() {
+            localSystem.deleteAllSubjects();
+            localSystem.createSubject(subject);
+            localSystem.createSubject(subject2);
+            assertThat(subjects.size()).isEqualTo(2);
         }
-        @Test
-        void getSubjectIdsByStudent() {
-        }
-        @Test
-        void getSubjectIdsByTeacher() {
-        }
-
         @Test
         void deleteAllSubjects() {
+                localSystem.deleteAllSubjects();
+                localSystem.createSubject(subject);
+                localSystem.createSubject(subject2);
+                localSystem.deleteAllSubjects();
+                assertThat(subjects.size()).isEqualTo(0);
+            }
         }
-
-        @Test
-        void addSubjectToStudentById() {
-        }
-
-        @Test
-        void addSubjectToTeacherById() {
-        }
-    }
 
     @Tag("History")
     @Nested
-    class historyTest{
+    class HistoryTest {
         @Test
         void getStudentHistory() {
+            history.clearStudentHistory();
+            localSystem.createStudent(student);
+            localSystem.createStudent(student2);
+            localSystem.getStudentById(student.getId());
+            localSystem.getStudentById(student2.getId());
+            var studentHistory = localSystem.getStudentHistory();
+            assertThat(studentHistory.size()).isEqualTo(2);
         }
 
         @Test
         void getTeacherHistory() {
+            history.clearTeacherHistory();
+            localSystem.createTeacher(teacher);
+            localSystem.createTeacher(teacher2);
+            localSystem.getTeacherById(teacher.getId());
+            localSystem.getTeacherById(teacher2.getId());
+            var teacherHistory = localSystem.getTeacherHistory();
+            assertThat(teacherHistory.size()).isEqualTo(2);
         }
 
         @Test
         void getSubjectHistory() {
+            history.clearSubjectHistory();
+            localSystem.createSubject(subject);
+            localSystem.createSubject(subject2);
+            localSystem.getSubjectById(subject.getId());
+            localSystem.getSubjectById(subject2.getId());
+            var subjectHistory = localSystem.getSubjectHistory();
+            assertThat(subjectHistory.size()).isEqualTo(2);
         }
     }
 }
